@@ -10,7 +10,7 @@ public static class Prompting
         var variants = new (string Name, Func<string, string> Prompt)[]
         {
             ("zero-shot", note => Extraction.Prompt(note)),
-            // TODO: przygotuj wariant one-shot (jeden przykład)
+            ("one-shot", note => Extraction.Prompt(note, examples.Take(1))),
             ("few-shot", note => Extraction.Prompt(note, examples))
         };
 

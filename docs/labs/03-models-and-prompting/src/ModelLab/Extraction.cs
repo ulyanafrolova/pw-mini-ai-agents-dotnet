@@ -54,6 +54,7 @@ public static class Extraction
     {
         try
         {
+            response = response.Replace("json", "").Replace("```", "");
             using var json = JsonDocument.Parse(response);
             var root = json.RootElement;
 
