@@ -49,9 +49,10 @@ Kod: `src/Experiments/EXP-01-model-comparison/`
 
 ```bash
 dotnet run --project src/ModelLab -- EXP-01
+dotnet run --project src/ModelLab -- EXP-01 --model gemma3:4b,qwen2.5-coder
 ```
 
-Oba modele otrzymują ten sam prompt (zero-shot) i ten sam zbiór notatek.
+Bez `--model` porównywane są `gemma3:4b` i `qwen3:4b`. Wszystkie modele otrzymują ten sam prompt (zero-shot) i ten sam zbiór notatek.
 
 **Pytanie:** czy większy lub nowszy model zawsze daje lepsze wyniki? Ile kosztuje nas to w czasie odpowiedzi?
 

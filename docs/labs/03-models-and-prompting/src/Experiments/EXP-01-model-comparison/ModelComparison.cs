@@ -1,15 +1,18 @@
 // EXP-01: porównanie dwóch modeli w ekstrakcji piętra i windy
 public static class ModelComparison
 {
-    private static readonly string[] Models =
+    private static readonly string[] DefaultModels =
     [
         "gemma3:4b",
         "qwen3:4b"
     ];
 
-    public static async Task RunAsync(OllamaClient client)
+    public static async Task RunAsync(OllamaClient client, IReadOnlyList<string> models)
     {
-        foreach (var model in Models)
+        if (models.Count == 0)
+            models = DefaultModels;
+
+        foreach (var model in models)
         {
             Console.WriteLine($"\nModel: {model}");
 

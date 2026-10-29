@@ -4,14 +4,18 @@ using System.Diagnostics;
 public static class Temperature
 {
     // Ten sam model i prompt - zmieniamy tylko temperaturę
-    private const string Model = "gemma3:4b";
+    private const string DefaultModel = "gemma3:4b";
 
     private const int Repetitions = 5;
 
     private static readonly double[] Temperatures = [0.0, 0.5, 1.0];
 
-    public static async Task RunAsync(OllamaClient client)
+    public static async Task RunAsync(OllamaClient client, string? model)
     {
+        model ??= DefaultModel;
+
+        Console.WriteLine($"\n=== Model: {model} ===");
+
         var notes = TestData.Examples;
 
         foreach (var temperature in Temperatures)
@@ -30,7 +34,7 @@ public static class Temperature
                     var watch = Stopwatch.StartNew();
 
                     var response = await client.GenerateAsync(
-                        Model,
+                        model,
                         Extraction.Prompt(note.Note),
                         temperature);
 
@@ -58,7 +62,7 @@ public static class Temperature
             Console.WriteLine(metrics);
             Console.WriteLine($"Powtarzalne notatki: {stableNotes}/{notes.Count}");
 
-            ResultsCsv.Append("EXP-03", Model, $"x{Repetitions}", temperature, metrics);
+            ResultsCsv.Append("EXP-03", model, $"x{Repetitions}", temperature, metrics);
         }
     }
 }

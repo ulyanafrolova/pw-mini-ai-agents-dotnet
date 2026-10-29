@@ -127,7 +127,17 @@ dotnet run --project src/ModelLab -- EXP-04
 
 Wyniki są dopisywane do `results/results.csv`, a raport przygotuj na podstawie `reports/template.md`.
 
-> **Uwaga:** nazwy modeli w konfiguracji aplikacji C# muszą odpowiadać modelom pobranym przez Ollama. Jeśli wybierzesz inne modele, zmień ich nazwy w konfiguracji eksperymentu (`Models` lub `Model` na początku klasy w folderze `src/Experiments/EXP-XX-...`).
+Domyślnie eksperymenty używają modeli `gemma3:4b` i `qwen3:4b`. Inny model wskażesz parametrem `--model`. Można podać kilka modeli — powtarzając parametr albo rozdzielając nazwy przecinkiem:
+
+```bash
+dotnet run --project src/ModelLab -- EXP-01 --model gemma3:4b --model qwen2.5-coder
+dotnet run --project src/ModelLab -- EXP-01 --model gemma3:4b,qwen2.5-coder,llama3.2
+dotnet run --project src/ModelLab -- EXP-02 --model qwen2.5-coder
+```
+
+W EXP-01 modele są porównywane w jednym przebiegu, a EXP-02 ... EXP-04 uruchamiają się kolejno dla każdego podanego modelu (wiersze w `results.csv` różnią się kolumną modelu).
+
+> **Uwaga:** nazwy modeli muszą odpowiadać modelom pobranym przez Ollama (`ollama list`).
 
 > **Wskazówka:** modele 4B wymagają kilku GB pamięci RAM. Jeżeli komputer nie pozwala na ich płynne uruchamianie, wybierz mniejszy model. W eksperymencie EXP-01 porównuj modele na tym samym zbiorze notatek.
 

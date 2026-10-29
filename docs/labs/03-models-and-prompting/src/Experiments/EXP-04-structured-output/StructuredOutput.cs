@@ -1,10 +1,14 @@
 // EXP-04: ekstrakcja danych do JSON i walidacja
 public static class StructuredOutput
 {
-    private const string Model = "gemma3:4b";
+    private const string DefaultModel = "gemma3:4b";
 
-    public static async Task RunAsync(OllamaClient client)
+    public static async Task RunAsync(OllamaClient client, string? model)
     {
+        model ??= DefaultModel;
+
+        Console.WriteLine($"\n=== Model: {model} ===");
+
         // Format JSON opisany tylko w prompcie vs natywny tryb JSON Schema w Ollama
         var variants = new (string Name, object? Format)[]
         {
@@ -18,12 +22,12 @@ public static class StructuredOutput
 
             var metrics = await Extraction.EvaluateAsync(
                 client,
-                Model,
+                model,
                 TestData.Examples,
                 note => Extraction.Prompt(note),
                 format: format);
 
-            ResultsCsv.Append("EXP-04", Model, name, 0, metrics);
+            ResultsCsv.Append("EXP-04", model, name, 0, metrics);
         }
     }
 }
